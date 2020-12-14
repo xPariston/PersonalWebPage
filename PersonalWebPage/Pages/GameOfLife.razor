@@ -1,148 +1,111 @@
 ﻿@page "/gameoflife"
-@using PersonalWebPage.GameOfLife
-@using System.Linq
-@using System.Diagnostics
-@using System.Threading;
+@using ViewModels
+@using GameOfLifeLibary.GameForms.GameOfLifeTypes
 
 <h1>Game of Life</h1>
-<span>
-    <button name="BtnRestartSimulation" @onclick="BtnRestartSimulationClick">Restart</button>
-    <button name="BtnStartSimulation" @onclick="BtnStartSimulationClick">Start</button>
-    <button name="BtnStopSimulation" @onclick="BtnStopSimulationClick">Stop</button>
-    <button name="BtnStepSimulation" @onclick="BtnStepSimulationClick">Step</button>
-
-
-</span>
-
-<table style="font-size: 4px" height="100%" width="100%">
-
-    @for (int i = 0; i < Length; i++)
-    {
-        <tr>
-            @for (int j = 0; j < Width; j++)
+<div>
+    <span>
+        <button name="BtnGeneratePopulation" @onclick="viewModel.BtnGeneratePopulationClick">Generate</button>
+        <button name="BtnStartSimulation" @onclick="viewModel.BtnStartSimulationClick">Start</button>
+        <button name="BtnStopSimulation" @onclick="viewModel.BtnStopSimulationClick">Stop</button>
+        <button name="BtnStepSimulation" @onclick="viewModel.BtnStepSimulationClick">Step</button>
+    </span>
+</div>
+<div>
+    <span>
+        <span>
+            <span>Length:</span>
+            <button name="BtnDecrementLength" @onclick="viewModel.BtnDecrementLength">-</button>
+            <span>@viewModel.tempLength</span>
+            <button name="BtnIncrementLength" @onclick="viewModel.BtnIncrementLength">+</button>
+        </span>
+        <span>
+            <span>Width:</span>
+            <button name="BtnDecrementWidth" @onclick="viewModel.BtnDecrementWidth">-</button>
+            <span>@viewModel.tempWidth</span>
+            <button name="BtnIncrementLength" @onclick="viewModel.BtnIncrementWidth">+</button>
+        </span>
+        <span>
+            <span>Starting Points:</span>
+            <button name="BtnDecrementStartingPoints" @onclick="viewModel.BtnDecrementStartingPopulation">-</button>
+            <span>@viewModel.StartingPopulation</span>
+            <button name="BtnIncrementStartingPoints" @onclick="viewModel.BtnIncrementStartingPopulation">+</button>
+        </span>
+    </span>
+</div>
+<div>
+    <span>
+        <label>Form Simulation: </label>
+        <select @bind="viewModel.SelectedType">
+            @foreach (FormTypes formType in (FormTypes[])Enum.GetValues(typeof(FormTypes)))
             {
-                @if (GeneratedTable[j, i] == 0)
-                {
-                    <td>&nbsp;</td>
-                }
-                else
-                {
-                    <td class="bg-dark">&nbsp;</td>
-                }
-
+                <option value="@formType">@formType</option>
             }
-        </tr>
-    }
-</table>
-
-@code {
-
-    public int Length = 80;
-    public int Width = 150;
-    private int StartingColony = 1000;
-    private int[,] GeneratedTable;
-    private Stopwatch stopwatch = new Stopwatch();
-    private bool autoSimulate = false;
-    private Timer timer;
-
-    protected override async Task OnInitializedAsync()
-    {
-        GeneratedTable = InitialSpawner.SpawnStarters(StartingColony, Length, Width);
-    }
-
-    private void BtnRestartSimulationClick()
-    {
-        GeneratedTable = InitialSpawner.SpawnStarters(StartingColony, Length, Width);
-        autoSimulate = false;
-    }
-
-    private void BtnStopSimulationClick()
-    {
-        autoSimulate = false;
-        stopwatch.Reset();
-    }
-
-    private void BtnStartSimulationClick()
-    {
-        autoSimulate = true;
-        if (timer == null)
+        </select>
+        @if (viewModel.SelectedType != null)
         {
-            timer = new Timer(new TimerCallback(timer =>
-            {
-                if (autoSimulate == true)
+            <select @bind="viewModel.SelectedForm">
+                @foreach (var form in Enum.GetValues(FormTypesRelations.FormTypesRelationsDict[Enum.Parse<FormTypes>(viewModel.SelectedType)]))
                 {
-                    GenerateNextStep();
-                    this.StateHasChanged();
+                    <option value="@form">@form</option>
                 }
-                else
-                {
-                    return;
-                }
-            }), null, 300, 300);
-        }
-    }
-
-
-    private void BtnStepSimulationClick()
-    {
-        GenerateNextStep();
-    }
-
-    private void GenerateNextStep()
-    {
-        int[,] nextStepTable = new int[Width, Length];
-        for (int i = 0; i < Width; i++)
-        {
-            for (int j = 0; j < Length; j++)
+            </select>
+            @if (viewModel.SelectedForm != null)
             {
-                int calculatedNeighbours = CalculateNeighbours(GeneratedTable, new CoordinatePoint(i, j));
-                nextStepTable[i, j] = ApplyRules(calculatedNeighbours, GeneratedTable[i, j]);
+                <button name="BtnGenerateForm" @onclick="viewModel.BtnGenerateForm"> Generate Form </button>
             }
         }
+    </span>
 
-        GeneratedTable = nextStepTable;
-    }
+</div>
+<div>
+    <table style="font-size: 4px" height="500px" width="100%">
 
-    private int ApplyRules(int countOfNeighbours, int initialState)
-    {
-        int returnValue = 0;
-
-        if (initialState == 0 && countOfNeighbours == 3)
+        @for (int i = 0; i < Length; i++)
         {
-            returnValue = 1;
-        }
-
-        if (initialState == 1 && countOfNeighbours >= 2 && countOfNeighbours <= 3)
-        {
-            returnValue = 1;
-        }
-
-        return returnValue;
-    }
-
-    private int CalculateNeighbours(int[,] activeTable, CoordinatePoint currentPosition)
-    {
-        int returnValue = 0;
-        int countNeighbouCells = 0;
-
-        for (int i = currentPosition.XPoint - 1; i < currentPosition.XPoint + 2; i++)
-        {
-            for (int j = currentPosition.YPoint - 1; j < currentPosition.YPoint + 2; j++)
-            {
-                if (i >= activeTable.GetLowerBound(0) && i < activeTable.GetUpperBound(0) &&
-                    j >= activeTable.GetLowerBound(1) && j < activeTable.GetUpperBound(1))
+            <tr>
+                @for (int j = 0; j < Width; j++)
                 {
-                    if (i != currentPosition.XPoint || j != currentPosition.YPoint)
+                    @if (GeneratedTable[j, i] == 0)
                     {
-                        returnValue += activeTable[i, j];
+                        <td class="bg-dark">&nbsp;</td>
                     }
+                    else
+                    {
+                        <td>&nbsp;</td>
+                    }
+
                 }
-            }
+            </tr>
         }
+    </table>
+</div>
 
-
-        return returnValue;
+@code
+{
+    public int[,] GeneratedTable
+    {
+        get { return viewModel.GeneratedTable; }
     }
+
+    public int Length
+    {
+        get { return viewModel.Length; }
+    }
+
+    public int Width
+    {
+        get { return viewModel.Width; }
+    }
+
+    GameOfLifeViewModel viewModel;
+
+    protected override void OnInitialized()
+    {
+        viewModel = new GameOfLifeViewModel(new Action(() => this.StateHasChanged()));
+        viewModel.OnInit();
+    }
+
 }
 
 

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebPage", "PersonalWebPage\PersonalWebPage.csproj", "{5982D47F-E46D-459A-A541-482624E938F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalWebPage", "PersonalWebPage\PersonalWebPage.csproj", "{5982D47F-E46D-459A-A541-482624E938F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameOfLifeLibary", "GameOfLifeForms\GameOfLifeLibary.csproj", "{BB827613-4FA0-4238-8A57-26A8F09B81C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{BA00043B-E1F6-4FBC-AA74-3ACCE87C42E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{5982D47F-E46D-459A-A541-482624E938F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5982D47F-E46D-459A-A541-482624E938F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5982D47F-E46D-459A-A541-482624E938F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB827613-4FA0-4238-8A57-26A8F09B81C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB827613-4FA0-4238-8A57-26A8F09B81C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB827613-4FA0-4238-8A57-26A8F09B81C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB827613-4FA0-4238-8A57-26A8F09B81C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA00043B-E1F6-4FBC-AA74-3ACCE87C42E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA00043B-E1F6-4FBC-AA74-3ACCE87C42E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA00043B-E1F6-4FBC-AA74-3ACCE87C42E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA00043B-E1F6-4FBC-AA74-3ACCE87C42E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
