@@ -9,15 +9,25 @@ namespace PersonalWebPage.ViewModels
 {
     public class GameOfLifeViewModel : PageModel
     {
+        private string selectedType;
+        private Timer timer;
+        private TableGenerator tableGenerator = TableGenerator.GetTableGenerator();
+        private Action notifyPropertyChangedMethod;
+
         public int Length = 70;
         public int Width = 150;
-        public int tempLength;
-        public int tempWidth;
+        public int TempLength;
+        public int TempWidth;
         public int[,] GeneratedTable;
         public int StartingPopulation = 1000;
         public string SelectedForm;
+        public bool autoSimulate = false;
 
-        private string selectedType;
+        public GameOfLifeViewModel(Action notifyPropertyChanged)
+        {
+            notifyPropertyChangedMethod = notifyPropertyChanged;
+            OnInit();
+        }
 
         public string SelectedType
         {
@@ -28,49 +38,36 @@ namespace PersonalWebPage.ViewModels
                 selectedType = value;
             }
         }
-
-
-
-        private bool autoSimulate = false;
-        private Timer timer;
-        private TableGenerator tableGenerator = TableGenerator.GetTableGenerator();
-        private Action notifyPropertyChangedMethod;
-
-        public GameOfLifeViewModel(Action notifyPropertyChanged)
-        {
-            notifyPropertyChangedMethod = notifyPropertyChanged;
-        }
-
         public void OnInit()
         {
-            tempLength = Length;
-            tempWidth = Width;
+            TempLength = Length;
+            TempWidth = Width;
             GeneratedTable = tableGenerator.GenrateTableWithPopulation(StartingPopulation, Length, Width);
         }
 
         public void BtnDecrementLength()
         {
-            if (tempLength >= 0)
+            if (TempLength >= 0)
             {
-                tempLength -= 10;
+                TempLength -= 10;
             }
         }
 
         public void BtnIncrementLength()
         {
-            tempLength += 10;
+            TempLength += 10;
         }
 
         public void BtnDecrementWidth()
         {
-            if (tempWidth >= 0)
+            if (TempWidth >= 0)
             {
-                tempWidth -= 10;
+                TempWidth -= 10;
             }
         }
         public void BtnIncrementWidth()
         {
-            tempWidth += 10;
+            TempWidth += 10;
         }
 
         public void BtnDecrementStartingPopulation()
@@ -88,8 +85,8 @@ namespace PersonalWebPage.ViewModels
 
         public void BtnGeneratePopulationClick()
         {
-            Length = tempLength;
-            Width = tempWidth;
+            Length = TempLength;
+            Width = TempWidth;
             GeneratedTable = InitialSpawner.SpawnStarters(StartingPopulation, Length, Width);
             autoSimulate = false;
         }
@@ -122,11 +119,13 @@ namespace PersonalWebPage.ViewModels
 
         public void BtnStepSimulationClick()
         {
+            autoSimulate = false;
             GeneratedTable = tableGenerator.SimulateNextStep(GeneratedTable);
         }
 
         public void BtnGenerateForm()
         {
+            autoSimulate = false;
             int[,] tempTable;
             switch (Enum.Parse<FormTypes>(SelectedType))
             {

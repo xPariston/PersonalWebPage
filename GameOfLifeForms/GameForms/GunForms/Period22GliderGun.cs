@@ -3,9 +3,9 @@ using GameOfLifeLibary.GameForms.GameOfLifeTypes;
 
 namespace GameOfLifeLibary.GameForms.GunForms
 {
-    class Period22GliderGun : GunForm
+    internal class Period22GliderGun : GunForm
     {
-        public Period22GliderGun()
+        internal Period22GliderGun()
         {
             GeneratedForm = GenerateForm();
             CalculateSize(GeneratedForm);

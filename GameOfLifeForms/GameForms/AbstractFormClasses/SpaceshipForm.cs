@@ -3,12 +3,12 @@ using GameOfLifeLibary.GameForms.GameOfLifeTypes;
 
 namespace GameOfLifeLibary.GameForms.AbstractFormClasses
 {
-    abstract class SpaceshipForm : Form
+    internal abstract class SpaceshipForm : Form
     {
 
-        public SpaceshipFormTypes SpaceshipFormType;
+        internal SpaceshipFormTypes SpaceshipFormType;
 
-        public SpaceshipForm()
+        internal SpaceshipForm()
         {
             DeclareFormType();
         }

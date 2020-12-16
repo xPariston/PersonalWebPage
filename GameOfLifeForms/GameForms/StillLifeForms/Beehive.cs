@@ -5,7 +5,7 @@ namespace GameOfLifeLibary.GameForms.StillLifeForms
 {
     internal class Beehive : StillLifeForm
     {
-        public Beehive()
+        internal Beehive()
         {
             this.GeneratedForm = this.GenerateForm();
             this.CalculateSize(this.GeneratedForm);

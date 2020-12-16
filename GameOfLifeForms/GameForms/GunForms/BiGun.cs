@@ -3,9 +3,9 @@ using GameOfLifeLibary.GameForms.GameOfLifeTypes;
 
 namespace GameOfLifeLibary.GameForms.GunForms
 {
-    class BiGun : GunForm
+    internal class BiGun : GunForm
     {
-        public BiGun()
+        internal BiGun()
         {
             GeneratedForm = GenerateForm();
             CalculateSize(GeneratedForm);

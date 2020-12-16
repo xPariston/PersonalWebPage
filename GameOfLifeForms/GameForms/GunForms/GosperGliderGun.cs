@@ -3,9 +3,9 @@ using System;
 
 namespace GameOfLifeLibary.GameForms.GunForms
 {
-    class GosperGliderGun : GunForm
+    internal class GosperGliderGun : GunForm
     {
-        public GosperGliderGun()
+        internal GosperGliderGun()
         {
             GeneratedForm = GenerateForm();
             CalculateSize(GeneratedForm);

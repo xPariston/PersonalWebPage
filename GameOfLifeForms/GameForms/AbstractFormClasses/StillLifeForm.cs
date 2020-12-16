@@ -2,11 +2,11 @@
 
 namespace GameOfLifeForms.AbstractFormClasses
 {
-    abstract class StillLifeForm : Form
+    internal abstract class StillLifeForm : Form
     {
-        public StillLifeFormTypes StillLifeFormType;
+        internal StillLifeFormTypes StillLifeFormType;
 
-        public StillLifeForm()
+        internal StillLifeForm()
         {
             DeclareFormType();
         }

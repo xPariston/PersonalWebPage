@@ -3,11 +3,11 @@ using GameOfLifeLibary.GameForms.GameOfLifeTypes;
 
 namespace GameOfLifeLibary.GameForms.AbstractFormClasses
 {
-    abstract class GunForm : Form
+    internal abstract class GunForm : Form
     {
-        public GunFormTypes GunFormType;
+        internal GunFormTypes GunFormType;
 
-        public GunForm()
+        internal GunForm()
         {
             DeclareFormType();
         }

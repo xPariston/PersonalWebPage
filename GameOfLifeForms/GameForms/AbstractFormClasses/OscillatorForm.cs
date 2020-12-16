@@ -3,11 +3,11 @@ using GameOfLifeLibary.GameForms.GameOfLifeTypes;
 
 namespace GameOfLifeLibary.GameForms.AbstractFormClasses
 {
-    abstract class OscillatorForm : Form
+    internal abstract class OscillatorForm : Form
     {
-        public OscillatorFormTypes OscillatorFormType;
+        internal OscillatorFormTypes OscillatorFormType;
 
-        public OscillatorForm()
+        internal OscillatorForm()
         {
             DeclareFormType();
         }

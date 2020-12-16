@@ -6,12 +6,12 @@ namespace GameOfLifeLibary.TableCreation.Calculations
     {
         internal static int[,] GenerateFormOnTable(Form form)
         {
-            int TableSpaceFactorWidth = 6;
-            int TableSpaceFactorLength = 2;
+            int TableFactorWidth = 6;
+            int TableFactorLength = 4;
             int FormWidth = form.FormSize.Width;
             int FormLength = form.FormSize.Height;
-            int TableWidth = FormWidth * TableSpaceFactorWidth;
-            int TableLength = FormLength * TableSpaceFactorLength;
+            int TableWidth = FormWidth * TableFactorWidth;
+            int TableLength = FormLength * TableFactorLength;
 
             int[,] generatedTable = new int[TableWidth, TableLength];
             for (int i = 0; i < FormWidth; i++)
@@ -20,6 +20,7 @@ namespace GameOfLifeLibary.TableCreation.Calculations
                 {
                     if (form.GeneratedForm[i, j] == 1)
                     {
+                        //The form will lie symmetrical on the center of the generated table.
                         generatedTable[i + TableWidth / 2 - FormWidth / 2, j + TableLength / 2 - FormLength / 2] = 1;
                     }
                 }

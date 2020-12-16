@@ -5,7 +5,7 @@ namespace GameOfLifeLibary.GameForms.StillLifeForms
 {
     internal class Table : StillLifeForm
     {
-        public Table()
+        internal Table()
         {
             this.GeneratedForm = this.GenerateForm();
             this.CalculateSize(this.GeneratedForm);

@@ -4,8 +4,6 @@
     {
         public static int[,] Calculate2DArray(string plainText)
         {
-
-
             System.Console.WriteLine(plainText);
             string[] stringArray = plainText.Split("\r\n");
             int Length = stringArray.Length;

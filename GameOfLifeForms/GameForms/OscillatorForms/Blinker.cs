@@ -5,7 +5,7 @@ namespace GameOfLifeLibary.GameForms.OscillatorForms
 {
     internal class Blinker : OscillatorForm
     {
-        public Blinker()
+        internal Blinker()
         {
             GeneratedForm = GenerateForm();
             CalculateSize(GeneratedForm);

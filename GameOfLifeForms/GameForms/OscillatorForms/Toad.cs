@@ -5,7 +5,7 @@ namespace GameOfLifeLibary.GameForms.OscillatorForms
 {
     internal class Toad : OscillatorForm
     {
-        public Toad()
+        internal Toad()
         {
             GeneratedForm = GenerateForm();
             CalculateSize(GeneratedForm);

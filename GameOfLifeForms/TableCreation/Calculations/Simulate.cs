@@ -41,12 +41,16 @@
         {
             int returnValue = 0;
 
-            for (int i = currentPosition.XPoint - 1; i < currentPosition.XPoint + 2; i++)
+            // Iterate through all eight neighbors.
+            for (int i = currentPosition.XPoint - 1; i <= currentPosition.XPoint + 1; i++)
             {
-                for (int j = currentPosition.YPoint - 1; j < currentPosition.YPoint + 2; j++)
+                for (int j = currentPosition.YPoint - 1; j <= currentPosition.YPoint + 1; j++)
                 {
+                    // Exclude the current position.
                     if (i != currentPosition.XPoint || j != currentPosition.YPoint)
                     {
+
+                        // To connect parallel borders check the start and ending of the matrix for border cells.
                         int x = i;
                         int y = j;
 
@@ -69,7 +73,6 @@
                         {
                             y -= activeTable.GetUpperBound(1) + 1;
                         }
-
 
                         returnValue += activeTable[x, y];
                     }

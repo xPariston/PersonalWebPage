@@ -5,7 +5,7 @@ namespace GameOfLifeLibary.GameForms.SpaceshipForms
 {
     internal class Glider : SpaceshipForm
     {
-        public Glider()
+        internal Glider()
         {
             GeneratedForm = GenerateForm();
             CalculateSize(GeneratedForm);

@@ -3,40 +3,39 @@
 @using GameOfLifeLibary.GameForms.GameOfLifeTypes
 
 <h1>Game of Life</h1>
-<div>
-    <span>
-        <button name="BtnGeneratePopulation" @onclick="viewModel.BtnGeneratePopulationClick">Generate</button>
-        <button name="BtnStartSimulation" @onclick="viewModel.BtnStartSimulationClick">Start</button>
-        <button name="BtnStopSimulation" @onclick="viewModel.BtnStopSimulationClick">Stop</button>
-        <button name="BtnStepSimulation" @onclick="viewModel.BtnStepSimulationClick">Step</button>
-    </span>
-</div>
-<div>
-    <span>
-        <span>
+
+<div style="margin:4px" class="d-flex justify-content-center">
+    <span class="border rounded bg-light" style="padding:6px">
+        <label style="margin-right:10px">Population Simulation:</label>
+        <span style="margin-right:10px">
             <span>Length:</span>
-            <button name="BtnDecrementLength" @onclick="viewModel.BtnDecrementLength">-</button>
-            <span>@viewModel.tempLength</span>
-            <button name="BtnIncrementLength" @onclick="viewModel.BtnIncrementLength">+</button>
+            <button name="BtnDecrementLength" @onclick="viewModel.BtnDecrementLength" type="button" class="btn btn-outline-primary">-</button>
+            <span>@TempLength</span>
+            <button name="BtnIncrementLength" @onclick="viewModel.BtnIncrementLength" type="button" class="btn btn-outline-primary">+</button>
         </span>
-        <span>
+        <span style="margin-right:10px">
             <span>Width:</span>
-            <button name="BtnDecrementWidth" @onclick="viewModel.BtnDecrementWidth">-</button>
-            <span>@viewModel.tempWidth</span>
-            <button name="BtnIncrementLength" @onclick="viewModel.BtnIncrementWidth">+</button>
+            <button name="BtnDecrementWidth" @onclick="viewModel.BtnDecrementWidth" type="button" class="btn btn-outline-primary">-</button>
+            <span>@TempWidth</span>
+            <button name="BtnIncrementLength" @onclick="viewModel.BtnIncrementWidth" type="button" class="btn btn-outline-primary">+</button>
         </span>
-        <span>
+        <span style="margin-right:10px">
             <span>Starting Points:</span>
-            <button name="BtnDecrementStartingPoints" @onclick="viewModel.BtnDecrementStartingPopulation">-</button>
-            <span>@viewModel.StartingPopulation</span>
-            <button name="BtnIncrementStartingPoints" @onclick="viewModel.BtnIncrementStartingPopulation">+</button>
+            <button name="BtnDecrementStartingPoints" @onclick="viewModel.BtnDecrementStartingPopulation" type="button" class="btn btn-outline-primary">-</button>
+            <span>@StartingPopulation</span>
+            <button name="BtnIncrementStartingPoints" @onclick="viewModel.BtnIncrementStartingPopulation" type="button" class="btn btn-outline-primary">+</button>
         </span>
+        <button name="BtnGeneratePopulation" @onclick="viewModel.BtnGeneratePopulationClick" type="button" class="btn btn-primary">Generate</button>
     </span>
 </div>
-<div>
-    <span>
-        <label>Form Simulation: </label>
-        <select @bind="viewModel.SelectedType">
+<div style="margin:4px" class="d-flex justify-content-center">
+    <span class="border rounded bg-light" style="padding:6px">
+        <label style="margin-right:4px">Form Simulation: </label>
+        <select @bind="viewModel.SelectedType" style="margin-right:4px">
+            @if (viewModel.SelectedType == null)
+            {
+                <option>Choose...</option>
+            }
             @foreach (FormTypes formType in (FormTypes[])Enum.GetValues(typeof(FormTypes)))
             {
                 <option value="@formType">@formType</option>
@@ -44,7 +43,7 @@
         </select>
         @if (viewModel.SelectedType != null)
         {
-            <select @bind="viewModel.SelectedForm">
+            <select @bind="viewModel.SelectedForm" style="margin-right:10px">
                 @foreach (var form in Enum.GetValues(FormTypesRelations.FormTypesRelationsDict[Enum.Parse<FormTypes>(viewModel.SelectedType)]))
                 {
                     <option value="@form">@form</option>
@@ -52,13 +51,28 @@
             </select>
             @if (viewModel.SelectedForm != null)
             {
-                <button name="BtnGenerateForm" @onclick="viewModel.BtnGenerateForm"> Generate Form </button>
+                <button name="BtnGenerateForm" @onclick="viewModel.BtnGenerateForm" type="button" class="btn btn-primary"> Generate Form </button>
             }
         }
     </span>
-
 </div>
-<div>
+<div style="margin:7px" class="d-flex justify-content-center">
+    <span class="border rounded bg-light" style="padding:6px">
+        @if (viewModel.autoSimulate)
+        {
+            <button name="BtnStartSimulation" @onclick="viewModel.BtnStartSimulationClick" type="button" class="btn btn-primary active">►</button>
+            <button name="BtnStepSimulation" @onclick="viewModel.BtnStepSimulationClick" type="button" class="btn btn-outline-primary">►|</button>
+            <button name="BtnStopSimulation" @onclick="viewModel.BtnStopSimulationClick" type="button" class="btn btn-outline-primary">■</button>
+        }
+        else
+        {
+            <button name="BtnStartSimulation" @onclick="viewModel.BtnStartSimulationClick" type="button" class="btn btn-outline-primary">►</button>
+            <button name="BtnStepSimulation" @onclick="viewModel.BtnStepSimulationClick" type="button" class="btn btn-outline-primary">►|</button>
+            <button name="BtnStopSimulation" @onclick="viewModel.BtnStopSimulationClick" type="button" class="btn btn-primary active">■</button>
+        }
+    </span>
+</div>
+<div style="margin:7px" class="border border-warning rounded ">
     <table style="font-size: 4px" height="500px" width="100%">
 
         @for (int i = 0; i < Length; i++)
@@ -98,12 +112,27 @@
         get { return viewModel.Width; }
     }
 
+    public int TempLength
+    {
+        get { return viewModel.TempLength; }
+    }
+
+    public int TempWidth
+    {
+        get { return viewModel.TempWidth; }
+    }
+
+
+    public int StartingPopulation
+    {
+        get { return viewModel.StartingPopulation; }
+    }
+
     GameOfLifeViewModel viewModel;
 
     protected override void OnInitialized()
     {
         viewModel = new GameOfLifeViewModel(new Action(() => this.StateHasChanged()));
-        viewModel.OnInit();
     }
 
 }

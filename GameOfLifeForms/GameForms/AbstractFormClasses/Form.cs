@@ -3,19 +3,14 @@ using System.Drawing;
 
 namespace GameOfLifeForms
 {
-    public class Form
+    public abstract class Form
     {
         public Size FormSize;
         public int[,] GeneratedForm;
         public FormTypes FormType;
-        protected virtual int[,] GenerateForm()
-        {
-            return new int[1, 1];
-        }
-        protected virtual void DeclareFormType()
-        {
+        protected abstract int[,] GenerateForm();
 
-        }
+        protected abstract void DeclareFormType();
 
         protected void CalculateSize(int[,] generatedForm)
         {

@@ -5,7 +5,7 @@ namespace GameOfLifeLibary.GameForms.OscillatorForms
 {
     internal class Pulsar : OscillatorForm
     {
-        public Pulsar()
+        internal Pulsar()
         {
             GeneratedForm = GenerateForm();
             CalculateSize(GeneratedForm);
