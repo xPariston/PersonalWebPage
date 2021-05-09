@@ -12,7 +12,7 @@ namespace GameOfLifeLibary.TableCreation.Calculations
 
             for (int i = 0; i < population; i++)
             {
-                AddCoordinatePointToArray(PopulationList, length, width);
+                AddRandomCoordinatePointToList(PopulationList, length, width);
             }
 
             return ConvertCoordinatePointToInt2DArray(PopulationList, length, width);
@@ -29,9 +29,8 @@ namespace GameOfLifeLibary.TableCreation.Calculations
             return generatedTable;
         }
 
-        private static void AddCoordinatePointToArray(List<CoordinatePoint> populationList, int length, int width)
+        private static void AddRandomCoordinatePointToList(List<CoordinatePoint> populationList, int length, int width)
         {
-            //Adds an randomized, not already included coordinate point to the given list
             CoordinatePoint tempPoint = CreateRandomizedSpwanPoints(length, width);
             if (!populationList.Contains(tempPoint))
             {
@@ -39,7 +38,7 @@ namespace GameOfLifeLibary.TableCreation.Calculations
             }
             else
             {
-                AddCoordinatePointToArray(populationList, length, width);
+                AddRandomCoordinatePointToList(populationList, length, width);
             }
         }
 

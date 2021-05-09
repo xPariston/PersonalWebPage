@@ -1,14 +1,15 @@
-﻿namespace Test
+﻿using FamilyStockBet;
+
+namespace Test
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string text = @".O..O
-O
-O...O
-OOOO";
-            StringToIntArray.Calculate2DArray(text);
+            //var t = Task.Run(() => FinanceApi.GetProductAsync("query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo"));
+            //t.Wait();
+
+            Shareholders test = new Shareholders();
         }
     }
 }

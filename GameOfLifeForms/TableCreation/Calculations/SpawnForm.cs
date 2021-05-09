@@ -20,7 +20,6 @@ namespace GameOfLifeLibary.TableCreation.Calculations
                 {
                     if (form.GeneratedForm[i, j] == 1)
                     {
-                        //The form will lie symmetrical on the center of the generated table.
                         generatedTable[i + TableWidth / 2 - FormWidth / 2, j + TableLength / 2 - FormLength / 2] = 1;
                     }
                 }
