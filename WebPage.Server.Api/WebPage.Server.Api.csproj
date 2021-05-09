@@ -4,5 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebPage.Server.Base\WebPage.Server.Base.csproj" />
+    <ProjectReference Include="..\WebPage.Server.FinanceService.Logic\WebPage.Server.FinanceService.Logic.csproj" />
+  </ItemGroup>
+
 
 </Project>
