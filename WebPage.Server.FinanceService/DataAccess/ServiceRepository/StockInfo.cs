@@ -7,11 +7,7 @@ namespace WebPage.Server.FinanceService.DataAccess.ServiceRepository
     {
         public int StockInfoId { get; set; }
 
-        public string Information { get; set; }
-
         public string Symbol { get; set; }
-
-        public string FullName { get; set; }
 
         public DateTime LastRefreshed { get; set; }
 

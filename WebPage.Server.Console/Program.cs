@@ -1,4 +1,4 @@
-﻿using WebPage.Server.Console.Database;
+﻿using WebPage.Server.FinanceService.Clients;
 
 namespace WebPage.Server.Console
 {
@@ -6,7 +6,8 @@ namespace WebPage.Server.Console
     {
         static void Main(string[] args)
         {
-            new FinanceDbMockingData().InsertMockingData();
+            //new FinanceDbMockingData().InsertMockingData();
+            new AlphaVantageClient().GetPerformanceAllTime("BMW.DEX");
         }
     }
 }
