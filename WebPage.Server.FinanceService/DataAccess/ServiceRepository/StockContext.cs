@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebPage.Server.FinanceService.DataAccess.ServiceRepository;
 
-namespace WebPage.Server.Console.Database
+namespace WebPage.Server.FinanceService.DataAccess.ServiceRepository
 {
-    public class FinanceServiceContext : DbContext
+    public class StockContext : DbContext
     {
         public DbSet<StockInfo> StockInfos { get; set; }
         public DbSet<StockPerformance> StockPerformance { get; set; }

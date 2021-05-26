@@ -13,17 +13,17 @@
             ResultState = resultState;
         }
 
-        public Result<T> CreateSuccessResult(T content)
+        public static Result<T> CreateSuccessResult(T content)
         {
             return new Result<T>(content, ResultState.Ok);
         }
 
-        public Result<T> CreateNotFoundResult(T content)
+        public static Result<T> CreateNotFoundResult(T content)
         {
             return new Result<T>(content, ResultState.NotFound);
         }
 
-        public Result<T> CreateBadRequestResult(T content)
+        public static Result<T> CreateBadRequestResult(T content)
         {
             return new Result<T>(content, ResultState.BadRequest);
         }

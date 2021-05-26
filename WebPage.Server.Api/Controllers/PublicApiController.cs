@@ -1,30 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using WebPage.Server.Base;
-using WebPage.Server.FinanceService.Logic;
+using WebPage.Server.FinanceService;
 
 namespace WebPage.Server.Api.Controllers
 {
     [ApiController]
-    [Route("[publicapi]")]
     public class PublicApiController : ControllerBase
     {
         private readonly ILogger<PublicApiController> _logger;
-        private readonly IFinanceService _financeService;
+        private readonly IFinanceRetrivalService _financeService;
 
-        public PublicApiController(ILogger<PublicApiController> logger, IFinanceService financeService)
+        public PublicApiController(ILogger<PublicApiController> logger, IFinanceRetrivalService financeService)
         {
             _logger = logger;
             _financeService = financeService;
         }
 
         [HttpGet]
-        [Route("stock/{symbol:string}/performance-this-year")]
-        public async Task<ActionResult<IEnumerable<int>>> GetPerformanceThisYear(string symbol)
+        [Route("stock/{symbol}/performance-this-year")]
+        public ActionResult<IDictionary<string, double>> GetPerformanceThisYear(string symbol)
         {
-            var result = await _financeService.GetPerformanceThisYear(symbol);
+            var result = _financeService.GetPerformanceThisYear(symbol);
             return MapResult(result);
         }
 

@@ -37,16 +37,27 @@ namespace WebPage.Server.Console.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StockPerformance", x => x.StockPerformanceId);
+                    table.ForeignKey(
+                        name: "FK_StockPerformance_StockInfos_StockInfoId",
+                        column: x => x.StockInfoId,
+                        principalTable: "StockInfos",
+                        principalColumn: "StockInfoId",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockPerformance_StockInfoId",
+                table: "StockPerformance",
+                column: "StockInfoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "StockInfos");
+                name: "StockPerformance");
 
             migrationBuilder.DropTable(
-                name: "StockPerformance");
+                name: "StockInfos");
         }
     }
 }

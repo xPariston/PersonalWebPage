@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebPage.Server.FinanceService.Data.ServiceRepository;
+using WebPage.Server.FinanceService.DataAccess.ServiceRepository;
 
 namespace WebPage.Server.Console.Database
 {

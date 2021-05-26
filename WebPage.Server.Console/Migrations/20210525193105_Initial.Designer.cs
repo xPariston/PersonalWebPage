@@ -10,7 +10,7 @@ using WebPage.Server.Console.Database;
 namespace WebPage.Server.Console.Migrations
 {
     [DbContext(typeof(FinanceServiceContext))]
-    [Migration("20210509114331_Initial")]
+    [Migration("20210525193105_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,10 +18,10 @@ namespace WebPage.Server.Console.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebPage.Server.FinanceService.Data.ServiceRepository.StockInfo", b =>
+            modelBuilder.Entity("WebPage.Server.FinanceService.DataAccess.ServiceRepository.StockInfo", b =>
                 {
                     b.Property<int>("StockInfoId")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace WebPage.Server.Console.Migrations
                     b.ToTable("StockInfos");
                 });
 
-            modelBuilder.Entity("WebPage.Server.FinanceService.Data.ServiceRepository.StockPerformance", b =>
+            modelBuilder.Entity("WebPage.Server.FinanceService.DataAccess.ServiceRepository.StockPerformance", b =>
                 {
                     b.Property<int>("StockPerformanceId")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,23 @@ namespace WebPage.Server.Console.Migrations
 
                     b.HasKey("StockPerformanceId");
 
+                    b.HasIndex("StockInfoId");
+
                     b.ToTable("StockPerformance");
+                });
+
+            modelBuilder.Entity("WebPage.Server.FinanceService.DataAccess.ServiceRepository.StockPerformance", b =>
+                {
+                    b.HasOne("WebPage.Server.FinanceService.DataAccess.ServiceRepository.StockInfo", null)
+                        .WithMany("Performance")
+                        .HasForeignKey("StockInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebPage.Server.FinanceService.DataAccess.ServiceRepository.StockInfo", b =>
+                {
+                    b.Navigation("Performance");
                 });
 #pragma warning restore 612, 618
         }

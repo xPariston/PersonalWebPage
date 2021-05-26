@@ -1,15 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using WebPage.Server.FinanceService;
+using WebPage.Server.FinanceService.DataAccess.ServiceRepository;
 
 namespace WebPage.Server.Api
 {
@@ -26,6 +21,9 @@ namespace WebPage.Server.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddEntityFrameworkSqlServer().AddDbContext<StockContext>();
+            services.AddTransient<IStockInfoRepository, StockInfoRepository>();
+            services.AddTransient<IFinanceRetrivalService, FinanceRetrivalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
