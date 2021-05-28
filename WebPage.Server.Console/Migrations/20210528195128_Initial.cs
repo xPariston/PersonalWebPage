@@ -13,9 +13,7 @@ namespace WebPage.Server.Console.Migrations
                 {
                     StockInfoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Information = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Symbol = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastRefreshed = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FirstValueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

@@ -10,7 +10,7 @@ using WebPage.Server.Console.Database;
 namespace WebPage.Server.Console.Migrations
 {
     [DbContext(typeof(FinanceServiceContext))]
-    [Migration("20210525193105_Initial")]
+    [Migration("20210528195128_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,12 +30,6 @@ namespace WebPage.Server.Console.Migrations
 
                     b.Property<DateTime>("FirstValueDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Information")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastRefreshed")
                         .HasColumnType("datetime2");

@@ -13,9 +13,11 @@ namespace WebPage.Server.FinanceService.DataAccess.ServiceRepository
             _stockContext = stockContext;
         }
 
-        public Task<StockInfo> Create(StockInfo _object)
+        public async Task<StockInfo> Create(StockInfo _object)
         {
-            throw new NotImplementedException();
+            var obj = await _stockContext.StockInfos.AddAsync(_object);
+            _stockContext.SaveChanges();
+            return obj.Entity;
         }
 
         public void Delete(StockInfo _object)
@@ -35,7 +37,8 @@ namespace WebPage.Server.FinanceService.DataAccess.ServiceRepository
 
         public void Update(StockInfo _object)
         {
-            throw new NotImplementedException();
+            _stockContext.StockInfos.Update(_object);
+            _stockContext.SaveChanges();
         }
 
         public StockInfo GetSymbol(string symbol)
@@ -44,9 +47,12 @@ namespace WebPage.Server.FinanceService.DataAccess.ServiceRepository
                 .Where(stock => stock.Symbol == symbol)
                 .FirstOrDefault();
 
-            stockInfo.Performance = _stockContext.StockPerformance
+            if (stockInfo != null)
+            {
+                stockInfo.Performance = _stockContext.StockPerformance
                 .Where(performance => performance.StockInfoId == stockInfo.StockInfoId)
                 .ToList();
+            }
 
             return stockInfo;
         }

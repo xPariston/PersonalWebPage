@@ -29,12 +29,6 @@ namespace WebPage.Server.Console.Migrations
                     b.Property<DateTime>("FirstValueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Information")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("LastRefreshed")
                         .HasColumnType("datetime2");
 

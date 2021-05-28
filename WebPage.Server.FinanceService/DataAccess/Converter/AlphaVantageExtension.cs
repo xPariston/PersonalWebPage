@@ -12,8 +12,8 @@ namespace WebPage.Server.FinanceService.DataAccess.Converter
             return new StockInfo
             {
                 Symbol = stockInfoDaily.MetaData.Symbol,
-                FirstValueDate = DateTime.Parse(stockInfoDaily.TimeSeriesDaily.Keys.First()),
-                LastRefreshed = DateTime.Parse(stockInfoDaily.TimeSeriesDaily.Keys.Last()),
+                FirstValueDate = DateTime.Parse(stockInfoDaily.TimeSeriesDaily.Keys.Last()),
+                LastRefreshed = DateTime.Parse(stockInfoDaily.TimeSeriesDaily.Keys.First()),
                 Performance = stockInfoDaily.TimeSeriesDaily
                                 .Select(stockTimestamp => new StockPerformance
                                 {

@@ -37,55 +37,55 @@ namespace WebPage.Server.Console.Database
                 new StockPerformance
                 {
                     StockInfoId = 1,
-                    close = 126.64,
+                    close = 126.64f,
                     valueDate = DateTime.Parse("01.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 1,
-                    close = 123.44,
+                    close = 123.44f,
                     valueDate = DateTime.Parse("02.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 1,
-                    close = 133.11,
+                    close = 133.11f,
                     valueDate = DateTime.Parse("03.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 2,
-                    close = 66.23,
+                    close = 66.23f,
                     valueDate = DateTime.Parse("01.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 2,
-                    close = 68.44,
+                    close = 68.44f,
                     valueDate = DateTime.Parse("02.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 2,
-                    close = 69.14,
+                    close = 69.14f,
                     valueDate = DateTime.Parse("03.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 3,
-                    close = 166.23,
+                    close = 166.23f,
                     valueDate = DateTime.Parse("01.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 3,
-                    close = 158.44,
+                    close = 158.44f,
                     valueDate = DateTime.Parse("02.05.2021")
                 },
                 new StockPerformance
                 {
                     StockInfoId = 3,
-                    close = 149.14,
+                    close = 149.14f,
                     valueDate = DateTime.Parse("03.05.2021")
                 }
             };
@@ -97,25 +97,19 @@ namespace WebPage.Server.Console.Database
             {
                 new StockInfo
                 {
-                    Information = "Keine Info",
                     Symbol = "BMW",
-                    FullName = "Bayrische Motoren Werke",
                     FirstValueDate = DateTime.Today,
                     LastRefreshed = DateTime.Now
                 },
                  new StockInfo
                 {
-                    Information = "Keine Info",
                     Symbol = "ADI",
-                    FullName = "Audi AG",
                     FirstValueDate = DateTime.Today,
                     LastRefreshed = DateTime.Now
                 },
                   new StockInfo
                 {
-                    Information = "Keine Info",
                     Symbol = "DAI",
-                    FullName = "Daimler AG",
                     FirstValueDate = DateTime.Today,
                     LastRefreshed = DateTime.Now
                 },
