@@ -13,19 +13,24 @@
             ResultState = resultState;
         }
 
+        private Result(ResultState resultState)
+        {
+            ResultState = resultState;
+        }
+
         public static Result<T> CreateSuccessResult(T content)
         {
             return new Result<T>(content, ResultState.Ok);
         }
 
-        public static Result<T> CreateNotFoundResult(T content)
+        public static Result<T> CreateNotFoundResult()
         {
-            return new Result<T>(content, ResultState.NotFound);
+            return new Result<T>(ResultState.NotFound);
         }
 
-        public static Result<T> CreateBadRequestResult(T content)
+        public static Result<T> CreateBadRequestResult()
         {
-            return new Result<T>(content, ResultState.BadRequest);
+            return new Result<T>(ResultState.BadRequest);
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace WebPage.Server.FinanceService.Clients
     {
         private UriBuilder _requestUri = new UriBuilder(
             schemeName: "https",
-            hostName: "alphavantage.co");
+            hostName: "www.alphavantage.co");
 
         private string _apiKey = "UGEQWSSUECMLKYV4";
 
@@ -31,8 +32,8 @@ namespace WebPage.Server.FinanceService.Clients
 
         private async Task<HttpResponseMessage> QueryAlphavantage(string requestUri)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
             return await client.GetAsync(requestUri);
         }
     }

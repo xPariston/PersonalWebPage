@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebPage.Server.FinanceService;
+using WebPage.Server.FinanceService.Clients;
 using WebPage.Server.FinanceService.DataAccess.ServiceRepository;
 
 namespace WebPage.Server.Api
@@ -23,6 +24,7 @@ namespace WebPage.Server.Api
             services.AddControllers();
             services.AddEntityFrameworkSqlServer().AddDbContext<StockContext>();
             services.AddTransient<IStockInfoRepository, StockInfoRepository>();
+            services.AddTransient<IAlphaVantageClient, AlphaVantageClient>();
             services.AddTransient<IFinanceRetrivalService, FinanceRetrivalService>();
         }
 

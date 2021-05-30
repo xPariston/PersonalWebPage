@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebPage.Server.Base;
 using WebPage.Server.FinanceService;
 
@@ -20,9 +21,9 @@ namespace WebPage.Server.Api.Controllers
 
         [HttpGet]
         [Route("stock/{symbol}/performance-this-year")]
-        public ActionResult<IDictionary<string, double>> GetPerformanceThisYear(string symbol)
+        public async Task<ActionResult<IDictionary<string, double>>> GetPerformanceThisYear(string symbol)
         {
-            var result = _financeService.GetPerformanceThisYear(symbol);
+            var result = await _financeService.GetPerformanceThisYear(symbol);
             return MapResult(result);
         }
 
