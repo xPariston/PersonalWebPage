@@ -4,10 +4,10 @@ namespace FamilyStockBet.Contracts
 {
     public class Shareholders
     {
-        public List<Portfolio> ListOfShareholders;
+        public List<Portfolio> ListOfPortfolios;
         public Shareholders()
         {
-            ListOfShareholders = new List<Portfolio>()
+            ListOfPortfolios = new List<Portfolio>()
             {
                 new Portfolio
                 {

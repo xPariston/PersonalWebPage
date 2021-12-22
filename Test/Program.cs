@@ -12,13 +12,13 @@ namespace Test
             //t.Wait();
 
             //Shareholders test = new Shareholders();
-            var controller = new Controller(new FinanceServiceClient());
+            var controller = new FinanceController(new FinanceServiceClient());
             testController(controller).GetAwaiter().GetResult();
             _ = System.Console.ReadKey();
 
         }
 
-        private static async Task testController(Controller controller)
+        private static async Task testController(FinanceController controller)
         {
             _ = await controller.InitializePortfolios();
             controller.PrintShortStanding();

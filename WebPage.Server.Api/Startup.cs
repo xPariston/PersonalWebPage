@@ -11,6 +11,8 @@ namespace WebPage.Server.Api
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -21,6 +23,17 @@ namespace WebPage.Server.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyMethod()
+                                              .AllowAnyHeader()
+                                              .AllowAnyOrigin()
+                                              .WithExposedHeaders("x-custom-header");
+                                  });
+            });
             services.AddControllers();
             services.AddEntityFrameworkSqlServer().AddDbContext<StockContext>();
             services.AddTransient<IStockInfoRepository, StockInfoRepository>();
@@ -39,6 +52,8 @@ namespace WebPage.Server.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

@@ -9,18 +9,24 @@ namespace FamilyStockBet.Client
 {
     public class FinanceServiceClient : IFinanceServiceClient
     {
+        public FinanceServiceClient(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         private UriBuilder _requestUri = new UriBuilder
         (
            scheme: "https",
            host: "localhost",
-           portNumber: 5001
+           portNumber: 7137
         );
+        private readonly HttpClient _httpClient;
 
         public async Task<Dictionary<DateTime, double>> GetPerformanceThisYear(string symbol)
         {
-            _requestUri.Path = $"stock/{symbol}/performance-this-year";
-            HttpClient client = new HttpClient();
-            var response = await client.GetAsync(_requestUri.ToString());
+            _requestUri.Path = $"Financial/stock/{symbol}/performance-this-year";
+            var response = await _httpClient.GetAsync(_requestUri.ToString());
+            //var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 var resposneValue = JsonSerializer.Deserialize<Dictionary<string, double>>(await response.Content.ReadAsStringAsync());

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebPage.Server.Base;
 using WebPage.Server.FinanceService;
-
 namespace WebPage.Server.Api.Controllers
 {
     [ApiController]
@@ -19,6 +19,7 @@ namespace WebPage.Server.Api.Controllers
             _financeService = financeService;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpGet]
         [Route("stock/{symbol}/performance-this-year")]
         public async Task<ActionResult<IDictionary<string, double>>> GetPerformanceThisYear(string symbol)

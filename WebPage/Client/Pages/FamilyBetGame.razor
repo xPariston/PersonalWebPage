@@ -1,0 +1,77 @@
+﻿@page "/familybetgame"
+@using FamilyStockBet
+@using FamilyStockBet.Client
+@using FamilyStockBet.Contracts
+@using System.Globalization
+@using Radzen
+@using Radzen.Blazor
+@using WebPage.Shared
+@inject HttpClient HttpClient
+
+<PageTitle>Family bet game</PageTitle>
+
+
+<h1>Family Bet Game</h1>
+@if (listOfPortfolios == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+  <div class="container">
+      @foreach (var portfolio in listOfPortfolios)
+      {
+        <div class="row">
+            <div class="col-sm-12 my-5">
+                <h3>@portfolio.NameOfOwner</h3>
+                <RadzenCard Class="w-100 mb-4" >
+                    <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                    <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
+                </RadzenCard>
+                <RadzenChart>
+                    @foreach (var stock in portfolio.Stocks)
+                    {
+                        <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDateItems(stock.StockRelativeValues)" CategoryProperty="Date" Title="@stock.StockName" LineType="LineType.Dashed" ValueProperty="ChangeInPercent">
+                            <RadzenMarkers MarkerType="MarkerType.Square" />
+                        </RadzenLineSeries>    
+                    }
+                    <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
+                    <RadzenValueAxis>
+                        <RadzenGridLines Visible="true" />
+                        <RadzenAxisTitle Text="Change in Percent" />
+                    </RadzenValueAxis>
+                </RadzenChart>
+            </div>
+        </div>
+        }
+    </div>
+}
+@code {
+
+    private List<Portfolio>? listOfPortfolios;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var financeController = new FinanceController(new FinanceServiceClient(HttpClient));
+        await financeController.InitializePortfolios();
+        listOfPortfolios = financeController.Shareholders.ListOfPortfolios;
+    }
+
+    bool smooth = false;
+
+    class DataItem
+    {
+        public DateTime Date { get; set; }
+        public double ChangeInPercent { get; set; }
+    }
+
+    private List<DataItem> ConvertToDateItems(IDictionary<DateTime, double> dict)
+    {
+        var DataItemList = new List<DataItem>();
+        foreach(var key in dict.Keys)
+        {
+            DataItemList.Add(new DataItem { Date = key, ChangeInPercent = dict[key] });
+        }
+        return DataItemList;
+    }
+}

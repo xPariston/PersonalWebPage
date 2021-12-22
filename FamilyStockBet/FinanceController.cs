@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace FamilyStockBet
 {
-    public class Controller
+    public class FinanceController
     {
         public Shareholders Shareholders { get; set; }
         public IFinanceServiceClient FinanceServiceClient { get; set; }
 
-        public Controller(IFinanceServiceClient financeServiceClient)
+        public FinanceController(IFinanceServiceClient financeServiceClient)
         {
             FinanceServiceClient = financeServiceClient;
             Shareholders = new Shareholders();
@@ -21,7 +21,7 @@ namespace FamilyStockBet
         public void PrintShortStanding()
         {
             Console.WriteLine($"Aktueller Stand im Aktienspiel vom {DateTime.Today}." + Environment.NewLine);
-            foreach (var portfolio in Shareholders.ListOfShareholders)
+            foreach (var portfolio in Shareholders.ListOfPortfolios)
             {
                 Console.WriteLine($"Portfolio von {portfolio.NameOfOwner}");
                 double portfolioPerformance = 0;
@@ -38,7 +38,7 @@ namespace FamilyStockBet
 
         public async Task<bool> InitializePortfolios()
         {
-            foreach (var portfolio in Shareholders.ListOfShareholders)
+            foreach (var portfolio in Shareholders.ListOfPortfolios)
             {
                 foreach (var stock in portfolio.Stocks)
                 {
