@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FamilyStockBet.Contracts
 {
@@ -6,5 +7,6 @@ namespace FamilyStockBet.Contracts
     {
         public List<Stock> Stocks { get; set; }
         public string NameOfOwner { get; set; }
+        public IDictionary<DateTime, double> StockRelativeMeans { get; set; }
     }
 }

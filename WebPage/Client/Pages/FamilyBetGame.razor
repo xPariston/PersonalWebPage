@@ -18,7 +18,29 @@
 }
 else
 {
-  <div class="container">
+  <div class="container" Style="height: 150%">
+      <div class="row">
+            <div class="col-sm-12 my-5">
+                <h3>Durchschnitt</h3>
+                <RadzenCard Class="w-100 mb-4" >
+                    <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                    <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
+                </RadzenCard>
+                <RadzenChart >
+                    @foreach (var portfolio in listOfPortfolios)
+                    {
+                        <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDataItems(portfolio.StockRelativeMeans)" CategoryProperty="Date" Title="@portfolio.NameOfOwner" ValueProperty="ChangeInPercent">
+                            <RadzenMarkers MarkerType="MarkerType.None" />
+                        </RadzenLineSeries>    
+                    }
+                    <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
+                    <RadzenValueAxis>
+                        <RadzenGridLines Visible="true" />
+                        <RadzenAxisTitle Text="Change in Percent" />
+                    </RadzenValueAxis>
+                </RadzenChart>
+            </div>
+        </div>
       @foreach (var portfolio in listOfPortfolios)
       {
         <div class="row">
@@ -31,8 +53,8 @@ else
                 <RadzenChart>
                     @foreach (var stock in portfolio.Stocks)
                     {
-                        <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDateItems(stock.StockRelativeValues)" CategoryProperty="Date" Title="@stock.StockName" LineType="LineType.Dashed" ValueProperty="ChangeInPercent">
-                            <RadzenMarkers MarkerType="MarkerType.Square" />
+                        <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDataItems(stock.StockRelativeValues)" CategoryProperty="Date" Title="@stock.StockName" ValueProperty="ChangeInPercent">
+                            <RadzenMarkers MarkerType="MarkerType.None" />
                         </RadzenLineSeries>    
                     }
                     <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
@@ -49,6 +71,7 @@ else
 @code {
 
     private List<Portfolio>? listOfPortfolios;
+    private Dictionary<Portfolio,List<DataItem>>? dictOfPortfolioMeans;
 
     protected override async Task OnInitializedAsync()
     {
@@ -65,7 +88,7 @@ else
         public double ChangeInPercent { get; set; }
     }
 
-    private List<DataItem> ConvertToDateItems(IDictionary<DateTime, double> dict)
+    private List<DataItem> ConvertToDataItems(IDictionary<DateTime, double> dict)
     {
         var DataItemList = new List<DataItem>();
         foreach(var key in dict.Keys)

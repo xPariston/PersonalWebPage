@@ -46,8 +46,29 @@ namespace FamilyStockBet
                     stock.StockPriceStart = stock.StockValues[DateTime.Parse("30.12.2020")];
                     stock.StockRelativeValues = CalculateRelativeValues(stock.StockPriceStart, stock.StockValues);
                 }
+
+                CalculateRelativeMeans(portfolio);
             }
             return true;
+        }
+
+        private void CalculateRelativeMeans(Portfolio portfolio)
+        {
+            var dataItemList = new List<KeyValuePair<DateTime, double>>();
+            foreach (var stock in portfolio.Stocks)
+            {
+                dataItemList = dataItemList.Concat(stock.StockRelativeValues).ToList();
+            }
+
+            IDictionary<DateTime, double> dataItemDictMeans = new Dictionary<DateTime, double>();
+            foreach (var date in portfolio.Stocks.First().StockRelativeValues.Keys)
+            {
+                dataItemDictMeans[date] = dataItemList
+                .Where(t => t.Key == date)
+                .Average(t => t.Value);
+            }
+
+            portfolio.StockRelativeMeans = dataItemDictMeans;
         }
 
         private IDictionary<DateTime, double> CalculateRelativeValues(double stockPriceStart, IDictionary<DateTime, double> absolutValues)
