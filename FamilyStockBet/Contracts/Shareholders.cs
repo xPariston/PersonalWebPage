@@ -16,18 +16,23 @@ namespace FamilyStockBet.Contracts
                     {
                         new Stock
                         {
-                            Symbol = "BA",
-                            StockName = "Boeing"
+                            Symbol = "NVD.DE",
+                            StockName = "Nvidia"
                         },
                         new Stock
                         {
-                            Symbol = "HOT.DE",
-                            StockName = "Hochtief"
+                            Symbol = "KLIC",
+                            StockName = "Kulicke and Soffa Industries"
                         },
                         new Stock
                         {
-                            Symbol = "BAYN.DE",
-                            StockName = "Bayer"
+                            Symbol = "KNBE",
+                            StockName = "KnowBe4"
+                        },
+                        new Stock
+                        {
+                            Symbol = "PYPL",
+                            StockName = "PayPal"
                         }
                     }
                 },
@@ -38,18 +43,23 @@ namespace FamilyStockBet.Contracts
                     {
                         new Stock
                         {
-                            Symbol = "EJTTF",
-                            StockName = "easyJet"
+                            Symbol = "DAI.DE",
+                            StockName = "Daimler AG"
                         },
                         new Stock
                         {
-                            Symbol = "R6C.DE",
-                            StockName = "Shell"
+                            Symbol = "APC.DE",
+                            StockName = "Apple"
                         },
                         new Stock
                         {
-                            Symbol = "CCL",
-                            StockName = "Carnival"
+                            Symbol = "NVD.DE",
+                            StockName = "Nvidia"
+                        },
+                        new Stock
+                        {
+                            Symbol = "DEZ.DE",
+                            StockName = "Deutz AG"
                         }
                     }
                 },
@@ -60,18 +70,50 @@ namespace FamilyStockBet.Contracts
                     {
                         new Stock
                         {
-                            Symbol = "ORCL",
-                            StockName = "Oracle"
+                            Symbol = "PFE.DE",
+                            StockName = "Pfizer"
                         },
                         new Stock
                         {
-                            Symbol = "B4B.DE",
-                            StockName = "Metro"
+                            Symbol = "MSF.DE",
+                            StockName = "Microsoft"
                         },
                         new Stock
                         {
-                            Symbol = "ASL.DE",
-                            StockName = "Akasol"
+                            Symbol = "TUIFF",
+                            StockName = "TUI"
+                        },
+                        new Stock
+                        {
+                            Symbol = "SEMHF",
+                            StockName = "Siemens Healthineers"
+                        }
+                    }
+                },
+                new Portfolio
+                {
+                    NameOfOwner = "Claudia",
+                    Stocks= new List<Stock>
+                    {
+                        new Stock
+                        {
+                            Symbol = "ZLPSF",
+                            StockName = "Zooplus"
+                        },
+                        new Stock
+                        {
+                            Symbol = "ELG.DE",
+                            StockName = "Elmos Saniconductor"
+                        },
+                        new Stock
+                        {
+                            Symbol = "SRT.DE",
+                            StockName = "Sartorious"
+                        },
+                        new Stock
+                        {
+                            Symbol = "APC.DE",
+                            StockName = "Apple"
                         }
                     }
                 }
