@@ -138,7 +138,7 @@ namespace WebPage.Server.FinanceService
             var alphvantageStock = JsonSerializer.Deserialize<StockInfoDaily>(responseString);
             var stockInfo = alphvantageStock.ConvertToStockInfo();
             stockInfo.Performance = stockInfo.Performance
-                .Where(performance => performance.valueDate.Year == DateTime.Today.Year || performance.valueDate == DateTime.Parse("12/30/2020"))
+                .Where(performance => performance.valueDate.Year == DateTime.Today.Year)
                 .ToList();
             return stockInfo;
         }
