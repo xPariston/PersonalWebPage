@@ -27,7 +27,7 @@ namespace FamilyStockBet
                 double portfolioPerformance = 0;
                 foreach (var stock in portfolio.Stocks)
                 {
-                    var output = $"-> Aktie: {stock.StockName} | Symbol: {stock.Symbol} | Wert am 30.12.2020: {stock.StockPriceStart} " +
+                    var output = $"-> Aktie: {stock.StockName} | Symbol: {stock.Symbol} | Wert am 01.01.: {stock.StockPriceStart} " +
                         $"| Wert am {stock.StockValues.Last().Key}: {stock.StockValues.Last().Value} | Prozentuale Veränderung: {stock.StockRelativeValues.Last().Value}%";
                     Console.WriteLine(output);
                     portfolioPerformance += stock.StockRelativeValues.Last().Value;
@@ -43,7 +43,7 @@ namespace FamilyStockBet
                 foreach (var stock in portfolio.Stocks)
                 {
                     stock.StockValues = await FinanceServiceClient.GetPerformanceThisYear(stock.Symbol);
-                    stock.StockPriceStart = stock.StockValues[DateTime.Parse("30.12.2020")];
+                    stock.StockPriceStart = stock.StockValues.Values.First();
                     stock.StockRelativeValues = CalculateRelativeValues(stock.StockPriceStart, stock.StockValues);
                 }
 
@@ -55,12 +55,24 @@ namespace FamilyStockBet
         private void CalculateRelativeMeans(Portfolio portfolio)
         {
             var dataItemList = new List<KeyValuePair<DateTime, double>>();
+            var lowestValue = portfolio.Stocks
+                .Select(stock => stock.StockRelativeValues.Values.Last())
+                .Min();
+            var lowestValuedStock = portfolio.Stocks
+                .Where(stock => stock.StockRelativeValues.Values.Last() == lowestValue)
+                .Single();
+
             foreach (var stock in portfolio.Stocks)
             {
+                if (stock == lowestValuedStock)
+                {
+                    continue;
+                }
                 dataItemList = dataItemList.Concat(stock.StockRelativeValues).ToList();
             }
 
             IDictionary<DateTime, double> dataItemDictMeans = new Dictionary<DateTime, double>();
+
             foreach (var date in portfolio.Stocks.First().StockRelativeValues.Keys)
             {
                 dataItemDictMeans[date] = dataItemList
