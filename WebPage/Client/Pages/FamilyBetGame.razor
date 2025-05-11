@@ -19,28 +19,90 @@
 else
 {
   <div class="container" Style="height: 150%">
-      <div class="row">
-            <div class="col-sm-12 my-5">
-                <h3>Durchschnitt</h3>
-                <RadzenCard Class="w-100 mb-4" >
-                    <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
-                    <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
-                </RadzenCard>
-                <RadzenChart >
-                    @foreach (var portfolio in listOfPortfolios)
-                    {
-                        <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDataItems(portfolio.StockRelativeMeans)" CategoryProperty="Date" Title="@portfolio.NameOfOwner" ValueProperty="ChangeInPercent">
-                            <RadzenMarkers MarkerType="MarkerType.None" />
-                        </RadzenLineSeries>    
-                    }
-                    <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
-                    <RadzenValueAxis>
-                        <RadzenGridLines Visible="true" />
-                        <RadzenAxisTitle Text="Change in Percent" />
-                    </RadzenValueAxis>
-                </RadzenChart>
-            </div>
+    <div class="row">
+        <div class="col-sm-12 my-5">
+            <h3>Durchschnitt ohne Streicher</h3>
+            <RadzenCard Class="w-100 mb-4" >
+                <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
+            </RadzenCard>
+            <RadzenChart >
+                @foreach (var portfolio in listOfPortfolios)
+                {
+                    <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDataItems(portfolio.StockRelativeMeans)" CategoryProperty="Date" Title="@portfolio.NameOfOwner" ValueProperty="ChangeInPercent">
+                        <RadzenMarkers MarkerType="MarkerType.None" />
+                    </RadzenLineSeries>    
+                }
+                <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
+                <RadzenValueAxis>
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Veränderung in Prozent" />
+                </RadzenValueAxis>
+            </RadzenChart>
         </div>
+        <div>
+            @foreach (var portfolio in listOfPortfolios)
+                {
+                    <div>
+                        <span>@portfolio.NameOfOwner: </span>
+                        <span>@Math.Round(portfolio.StockLastRelativeMean,2)%</span>
+                    </div>
+                }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 my-5">
+            <h3>Durchschnitt mit Streicher</h3>
+            <RadzenCard Class="w-100 mb-4" >
+                <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
+            </RadzenCard>
+            <RadzenChart >
+                @foreach (var portfolio in listOfPortfolios)
+                {
+                    <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDataItems(portfolio.StockRelativeMeansWithStreicher)" CategoryProperty="Date" Title="@portfolio.NameOfOwner" ValueProperty="ChangeInPercent">
+                        <RadzenMarkers MarkerType="MarkerType.None" />
+                    </RadzenLineSeries>    
+                }
+                <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
+                <RadzenValueAxis>
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Veränderung in Prozent" />
+                </RadzenValueAxis>
+            </RadzenChart>
+        </div>
+        <div>
+            @foreach (var portfolio in listOfPortfolios)
+                {
+                    <div>
+                        <span>@portfolio.NameOfOwner: </span>
+                        <span>@Math.Round(portfolio.StockLastRelativeMeanWithStreicher,2)%</span>
+                    </div>
+                }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 my-5">
+            <h3>Durchschnitt mit Streicher</h3>
+            <RadzenCard Class="w-100 mb-4" >
+                <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+                <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
+            </RadzenCard>
+            <RadzenChart >
+                @foreach (var portfolio in listOfPortfolios)
+                {
+                    <RadzenLineSeries Smooth="@smooth" Data="@ConvertToDataItems(portfolio.StockRelativeMeansWithStreicher.TakeLast(30).ToDictionary(x => x.Key, y => y.Value))" CategoryProperty="Date" Title="@portfolio.NameOfOwner" ValueProperty="ChangeInPercent">
+                        <RadzenMarkers MarkerType="MarkerType.None" />
+                    </RadzenLineSeries>    
+                }
+                <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
+                <RadzenValueAxis>
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Veränderung in Prozent" />
+                </RadzenValueAxis>
+            </RadzenChart>
+        </div>
+    </div>
       @foreach (var portfolio in listOfPortfolios)
       {
         <div class="row">
@@ -60,9 +122,18 @@ else
                     <RadzenCategoryAxis Padding="20" FormatString="{0:MMM}" />
                     <RadzenValueAxis>
                         <RadzenGridLines Visible="true" />
-                        <RadzenAxisTitle Text="Change in Percent" />
+                        <RadzenAxisTitle Text="Veränderung in Prozent" />
                     </RadzenValueAxis>
                 </RadzenChart>
+            </div>
+            <div>
+            @foreach (var stock in portfolio.Stocks)
+                {
+                    <div>
+                        <span>@stock.StockName: </span>
+                        <span>@Math.Round(stock.StockLastRelativeValues, 2)%</span>
+                    </div>
+                }
             </div>
         </div>
         }

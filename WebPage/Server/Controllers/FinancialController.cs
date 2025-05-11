@@ -8,6 +8,7 @@ namespace WebPage.Server.Controllers
     [Route("[controller]")]
     public class FinancialController : ControllerBase
     {
+        private DateTime maxDate = DateTime.Parse("2024-12-31");
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly IFinanceRetrivalService _financeRetrivalService;
 
@@ -21,7 +22,7 @@ namespace WebPage.Server.Controllers
         [Route("stock/{symbol}/performance-this-year")]
         public async Task<ActionResult<IDictionary<string, double>>> GetPerformanceThisYear(string symbol)
         {
-            var result = await _financeRetrivalService.GetPerformanceThisYear(symbol);
+            var result = await _financeRetrivalService.GetPerformanceThisYear(symbol, maxDate);
             return MapResult(result);
         }
 

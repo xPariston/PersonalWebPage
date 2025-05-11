@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebPage.Server.Base;
@@ -10,6 +11,7 @@ namespace WebPage.Server.Api.Controllers
     [ApiController]
     public class PublicApiController : ControllerBase
     {
+        private DateTime maxDate = DateTime.Parse("2024-12-31");
         private readonly ILogger<PublicApiController> _logger;
         private readonly IFinanceRetrivalService _financeService;
 
@@ -24,7 +26,7 @@ namespace WebPage.Server.Api.Controllers
         [Route("stock/{symbol}/performance-this-year")]
         public async Task<ActionResult<IDictionary<string, double>>> GetPerformanceThisYear(string symbol)
         {
-            var result = await _financeService.GetPerformanceThisYear(symbol);
+            var result = await _financeService.GetPerformanceThisYear(symbol, maxDate);
             return MapResult(result);
         }
 

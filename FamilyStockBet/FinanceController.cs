@@ -42,19 +42,30 @@ namespace FamilyStockBet
             {
                 foreach (var stock in portfolio.Stocks)
                 {
-                    stock.StockValues = await FinanceServiceClient.GetPerformanceThisYear(stock.Symbol);
-                    stock.StockPriceStart = stock.StockValues.Values.First();
-                    stock.StockRelativeValues = CalculateRelativeValues(stock.StockPriceStart, stock.StockValues);
+                    try
+                    {
+                        stock.StockValues = await FinanceServiceClient.GetPerformanceThisYear(stock.Symbol);
+                        stock.StockPriceStart = stock.StockValues.Values.First();
+                        stock.StockRelativeValues = CalculateRelativeValues(stock.StockPriceStart, stock.StockValues, stock.Symbol);
+                        stock.StockLastRelativeValues = stock.StockRelativeValues[stock.StockRelativeValues.Keys.Max()];
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
 
-                CalculateRelativeMeans(portfolio);
+                portfolio.StockRelativeMeans = CalculateRelativeMeans(portfolio, false);
+                portfolio.StockLastRelativeMean = portfolio.StockRelativeMeans[portfolio.StockRelativeMeans.Keys.Max()];
+                portfolio.StockRelativeMeansWithStreicher = CalculateRelativeMeans(portfolio, true);
+                portfolio.StockLastRelativeMeanWithStreicher = portfolio.StockRelativeMeansWithStreicher[portfolio.StockRelativeMeansWithStreicher.Keys.Max()];
             }
             return true;
         }
 
-        private void CalculateRelativeMeans(Portfolio portfolio)
+        private Dictionary<DateTime, double> CalculateRelativeMeans(Portfolio portfolio, bool withStreicher)
         {
             var dataItemList = new List<KeyValuePair<DateTime, double>>();
+
             var lowestValue = portfolio.Stocks
                 .Select(stock => stock.StockRelativeValues.Values.Last())
                 .Min();
@@ -64,28 +75,43 @@ namespace FamilyStockBet
 
             foreach (var stock in portfolio.Stocks)
             {
-                if (stock == lowestValuedStock)
+                if (withStreicher && stock == lowestValuedStock)
                 {
                     continue;
                 }
                 dataItemList = dataItemList.Concat(stock.StockRelativeValues).ToList();
             }
 
-            IDictionary<DateTime, double> dataItemDictMeans = new Dictionary<DateTime, double>();
+            var dataItemDictMeans = new Dictionary<DateTime, double>();
 
             foreach (var date in portfolio.Stocks.First().StockRelativeValues.Keys)
             {
-                dataItemDictMeans[date] = dataItemList
-                .Where(t => t.Key == date)
-                .Average(t => t.Value);
+                if (dataItemList.Where(x => x.Key == date).Count() == (withStreicher ? 3 : 4))
+                {
+                    dataItemDictMeans[date] = dataItemList
+                        .Where(t => t.Key == date)
+                        .Average(t => t.Value);
+                }
             }
-
-            portfolio.StockRelativeMeans = dataItemDictMeans;
+            return dataItemDictMeans;
         }
 
-        private IDictionary<DateTime, double> CalculateRelativeValues(double stockPriceStart, IDictionary<DateTime, double> absolutValues)
+        private IDictionary<DateTime, double> CalculateRelativeValues(double stockPriceStart, IDictionary<DateTime, double> absolutValues, string symbol = null)
         {
-            return absolutValues.ToDictionary(dict => dict.Key, dict => 100 - stockPriceStart / dict.Value * 100);
+            if (symbol == "NVDA")
+            {
+                return absolutValues.ToDictionary(dict => dict.Key, dict => 
+                    {
+                        if (dict.Value <= 400)
+                        {
+                            return (dict.Value * 10 / stockPriceStart * 100) - 100;
+                        }
+                        return (dict.Value / stockPriceStart * 100) - 100; 
+                    } 
+                );
+            }
+
+            return absolutValues.ToDictionary(dict => dict.Key, dict =>  (dict.Value / stockPriceStart * 100) - 100);
         }
     }
 }

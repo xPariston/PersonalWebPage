@@ -25,7 +25,7 @@ namespace WebPage.Server.FinanceService
             _alphaVantageClient = alphaVantageClient;
         }
 
-        async Task<Result<IDictionary<string, double>>> IFinanceRetrivalService.GetPerformanceThisYear(string symbol)
+        async Task<Result<IDictionary<string, double>>> IFinanceRetrivalService.GetPerformanceThisYear(string symbol, DateTime maxDate)
         {
             var performedDatabaseAction = await CheckSymbolForValueUpdates(symbol);
 
@@ -34,7 +34,7 @@ namespace WebPage.Server.FinanceService
                 return Result<IDictionary<string, double>>.CreateBadRequestResult();
             }
 
-            return RetrievePerformance(symbol);
+            return RetrievePerformance(symbol, maxDate);
         }
 
         private async Task<PerformedDatabaseAction> CheckSymbolForValueUpdates(string symbol)
@@ -54,7 +54,7 @@ namespace WebPage.Server.FinanceService
             }
         }
 
-        private Result<IDictionary<string, double>> RetrievePerformance(string symbol)
+        private Result<IDictionary<string, double>> RetrievePerformance(string symbol, DateTime maxDate)
         {
             var stock = _stockRepository.GetSymbol(symbol);
 
@@ -64,6 +64,7 @@ namespace WebPage.Server.FinanceService
             }
 
             var performance = stock.Performance
+                .Where(x => x.valueDate <= maxDate)
                 .OrderBy(stock => stock.valueDate)
                 .ToDictionary(performance => performance.valueDate.ToShortDateString(), performance => performance.close);
 
@@ -77,19 +78,26 @@ namespace WebPage.Server.FinanceService
 
         private async Task<PerformedDatabaseAction> InitializeSymbol(string symbol)
         {
-            var response = await _alphaVantageClient.GetPerformanceAllTime(symbol);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var stockInfo = await DeserializeAlphavantageJson(response);
-                stockInfo.LastRefreshed = DateTime.Today;
-                var entity = await _stockRepository.Create(stockInfo);
-                if (entity != null)
+                var response = await _alphaVantageClient.GetPerformanceAllTime(symbol);
+                if (response.IsSuccessStatusCode)
                 {
-                    return PerformedDatabaseAction.Create;
+                    var message = await response.Content.ReadAsStringAsync();
+                    var stockInfo = await DeserializeAlphavantageJson(response);
+                    stockInfo.LastRefreshed = DateTime.Today;
+                    var entity = await _stockRepository.Create(stockInfo);
+                    if (entity != null)
+                    {
+                        return PerformedDatabaseAction.Create;
+                    }
                 }
+                return PerformedDatabaseAction.Error;
             }
-
-            return PerformedDatabaseAction.Error;
+            catch (Exception)
+            {
+                return PerformedDatabaseAction.Error;
+            }
         }
 
         private DateTime GetLatestPerformanceDate(string symbol)
@@ -138,7 +146,7 @@ namespace WebPage.Server.FinanceService
             var alphvantageStock = JsonSerializer.Deserialize<StockInfoDaily>(responseString);
             var stockInfo = alphvantageStock.ConvertToStockInfo();
             stockInfo.Performance = stockInfo.Performance
-                .Where(performance => performance.valueDate.Year == DateTime.Today.Year)
+                .Where(performance => performance.valueDate.Year == 2024)
                 .ToList();
             return stockInfo;
         }

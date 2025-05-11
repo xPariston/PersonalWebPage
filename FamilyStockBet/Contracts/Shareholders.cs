@@ -16,77 +16,23 @@ namespace FamilyStockBet.Contracts
                     {
                         new Stock
                         {
-                            Symbol = "NVD.DE",
-                            StockName = "Nvidia"
+                            Symbol = "BYDDF",
+                            StockName = "Byd Company"
                         },
                         new Stock
                         {
-                            Symbol = "KLIC",
-                            StockName = "Kulicke and Soffa Industries"
+                            Symbol = "LQAG.DEX",
+                            StockName = "Laiqon"
                         },
                         new Stock
                         {
-                            Symbol = "KNBE",
-                            StockName = "KnowBe4"
+                            Symbol = "FYB.DEX",
+                            StockName = "Formycon"
                         },
                         new Stock
                         {
-                            Symbol = "PYPL",
-                            StockName = "PayPal"
-                        }
-                    }
-                },
-                new Portfolio
-                {
-                    NameOfOwner = "Paul",
-                    Stocks= new List<Stock>
-                    {
-                        new Stock
-                        {
-                            Symbol = "DAI.DE",
-                            StockName = "Daimler AG"
-                        },
-                        new Stock
-                        {
-                            Symbol = "APC.DE",
-                            StockName = "Apple"
-                        },
-                        new Stock
-                        {
-                            Symbol = "NVD.DE",
-                            StockName = "Nvidia"
-                        },
-                        new Stock
-                        {
-                            Symbol = "DEZ.DE",
-                            StockName = "Deutz AG"
-                        }
-                    }
-                },
-                new Portfolio
-                {
-                    NameOfOwner = "Patrick",
-                    Stocks= new List<Stock>
-                    {
-                        new Stock
-                        {
-                            Symbol = "PFE.DE",
-                            StockName = "Pfizer"
-                        },
-                        new Stock
-                        {
-                            Symbol = "MSF.DE",
-                            StockName = "Microsoft"
-                        },
-                        new Stock
-                        {
-                            Symbol = "TUIFF",
-                            StockName = "TUI"
-                        },
-                        new Stock
-                        {
-                            Symbol = "SEMHF",
-                            StockName = "Siemens Healthineers"
+                            Symbol = "M12.DEX",
+                            StockName = "M1 Kliniken"
                         }
                     }
                 },
@@ -97,26 +43,80 @@ namespace FamilyStockBet.Contracts
                     {
                         new Stock
                         {
-                            Symbol = "ZLPSF",
-                            StockName = "Zooplus"
+                            Symbol = "FSXLF",
+                            StockName = "Great Pacific Gold"
                         },
                         new Stock
                         {
-                            Symbol = "ELG.DE",
-                            StockName = "Elmos Saniconductor"
+                            Symbol = "BIRK",
+                            StockName = "Birkenstock"
                         },
                         new Stock
                         {
-                            Symbol = "SRT.DE",
-                            StockName = "Sartorious"
+                            Symbol = "DB1.DEX",
+                            StockName = "Deutsche Börse"
                         },
                         new Stock
                         {
-                            Symbol = "APC.DE",
-                            StockName = "Apple"
+                            Symbol = "GIDMF",
+                            StockName = "Nexus Uranium"
+                        },
+                    }
+                },
+                new Portfolio
+                {
+                    NameOfOwner = "Paul",
+                    Stocks= new List<Stock>
+                    {
+                        new Stock
+                        {
+                            Symbol = "NVS",
+                            StockName = "Novartis AG"
+                        },
+                        new Stock
+                        {
+                            Symbol = "NVDA",
+                            StockName = "NVIDIA"
+                        },
+                        new Stock
+                        {
+                            Symbol = "META",
+                            StockName = "Meta"
+                        },
+                        new Stock
+                        {
+                            Symbol = "EADSF",
+                            StockName = "Airbus"
                         }
                     }
-                }
+                },
+                new Portfolio
+                {
+                    NameOfOwner = "Patrick",
+                    Stocks= new List<Stock>
+                    {
+                        new Stock
+                        {
+                            Symbol = "FICO",
+                            StockName = "Fair Isaac"
+                        },
+                        new Stock
+                        {
+                            Symbol = "AMZN",
+                            StockName = "Amazon"
+                        },
+                        new Stock
+                        {
+                            Symbol = "ENGQF",
+                            StockName = "Engie"
+                        },
+                        new Stock
+                        {
+                            Symbol = "INTC",
+                            StockName = "Intel"
+                        }
+                    }
+                },
             };
         }
     }

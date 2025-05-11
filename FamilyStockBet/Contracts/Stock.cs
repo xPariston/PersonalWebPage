@@ -14,5 +14,7 @@ namespace FamilyStockBet.Contracts
         public IDictionary<DateTime, double> StockValues { get; set; }
 
         public IDictionary<DateTime, double> StockRelativeValues { get; set; }
+
+        public double StockLastRelativeValues { get; set; }
     }
 }
